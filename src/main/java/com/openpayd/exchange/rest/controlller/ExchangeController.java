@@ -2,14 +2,21 @@
 
 package com.openpayd.exchange.rest.controlller;
 
+import com.openpayd.exchange.model.ExchangeConversion;
+import com.openpayd.exchange.port.ExchangeExternalApiPort;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequiredArgsConstructor
 public class ExchangeController {
 
+	private final ExchangeExternalApiPort exchangeExternalApiPort;
 	@GetMapping("campaign-approval-history")
 	public String getRate(){
-        return null;
+        return exchangeExternalApiPort.getCurrencyPairRate(ExchangeConversion.builder()
+				.build());
 	}
 
 }
