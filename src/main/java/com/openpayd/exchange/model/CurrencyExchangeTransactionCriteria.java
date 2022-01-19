@@ -2,7 +2,10 @@
 
 package com.openpayd.exchange.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
@@ -10,12 +13,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CurrencyExchange {
-	private String sourceCurrency;
-	private String targetCurrency;
-	private double rate;
-	private double amount=1.0;
-	private double exchangeResult;
+public class CurrencyExchangeTransactionCriteria {
 	private String transactionId;
 	private LocalDate transactionDate;
 }

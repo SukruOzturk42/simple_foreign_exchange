@@ -2,9 +2,14 @@
 
 package com.openpayd.exchange.service;
 
+import com.openpayd.exchange.aspect.ExchangeTransactionRecordCreator;
 import com.openpayd.exchange.model.CurrencyExchange;
+import com.openpayd.exchange.model.PageContent;
+import com.openpayd.exchange.model.CurrencyExchangeTransactionCriteria;
+import com.openpayd.exchange.port.CurrencyExchangeTransactionPort;
 import com.openpayd.exchange.port.ExchangeExternalApiPort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +18,10 @@ public class ExchangeService {
 
 	private final ExchangeExternalApiPort exchangeExternalApiPort;
 
-	public CurrencyExchange getExchangeRate(String baseCurrency,String targetCurrency){
+	private final CurrencyExchangeTransactionPort currencyExchangeTransactionPort;
+
+
+	public CurrencyExchange getCurrencyExchangeAmountAsOne(String baseCurrency,String targetCurrency){
 
 		var currencyExchange=CurrencyExchange.builder()
 											 .sourceCurrency(baseCurrency)
@@ -24,7 +32,8 @@ public class ExchangeService {
 
 	}
 
-	private CurrencyExchange getExchangeRate(String source,String targetCurrency,double amount){
+	@ExchangeTransactionRecordCreator
+	public CurrencyExchange getCurrencyExchange(String source,String targetCurrency,double amount){
 
 		var currencyExchange=CurrencyExchange.builder()
 				.sourceCurrency(source)
@@ -33,6 +42,12 @@ public class ExchangeService {
 				.build();
 		return exchangeExternalApiPort.currencyExchangeResult(currencyExchange);
 
+	}
+
+	public PageContent<CurrencyExchange> getCurrencyTransactionHistory(
+			CurrencyExchangeTransactionCriteria currencyExchangeTransactionCriteria, Pageable pageable){
+		
+		return currencyExchangeTransactionPort.getCurrencyExchangeTransactions(currencyExchangeTransactionCriteria,pageable);
 	}
 
 
