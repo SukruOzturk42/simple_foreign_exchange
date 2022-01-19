@@ -2,9 +2,8 @@
 
 package com.openpayd.exchange.infrastructure.api.adapter;
 
-import com.openpayd.exchange.infrastructure.api.adapter.dto.ConversionApiResponse;
-import com.openpayd.exchange.infrastructure.api.config.ExchangeRatesApiRestTemplateConfig;
-import com.openpayd.exchange.model.ExchangeConversion;
+import com.openpayd.exchange.infrastructure.api.adapter.dto.LatestApiResponse;
+import com.openpayd.exchange.model.CurrencyExchange;
 import com.openpayd.exchange.port.ExchangeExternalApiPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,28 +22,30 @@ public class ExchangeExternalApiPortAdapter implements ExchangeExternalApiPort {
 	@Autowired
 	RestTemplate restTemplate;
 
-	private final String latestApi="/convert";
+	private final String LATEST_API_URL ="/latest";
 
 	@Value("${api.exchangerate.host.url}")
 	private String apiHost;
 	@Value("${api.exchangerate.access_key}")
 	private String accessKey;
 
+
+
 	@Override
-	public String getCurrencyPairRate(ExchangeConversion exchangeConversion) {
-		String urlTemplate = UriComponentsBuilder.fromHttpUrl(apiHost+latestApi)
+	public CurrencyExchange currencyExchangeResult(CurrencyExchange currencyExchange) {
+		String urlTemplate = UriComponentsBuilder.fromHttpUrl(apiHost+ LATEST_API_URL)
 				.queryParam("access_key", "{access_key}")
-				.queryParam("from", "{from}")
-				.queryParam("to", "{to}")
-				.queryParam("amount", "{amount}")
+				.queryParam("symbols ", "{symbols}")
 				.encode()
 				.toUriString();
 		Map<String, String> params = new HashMap<>();
 		params.put("access_key", accessKey);
-		params.put("from", "GBP");
-		params.put("to", "JPY");
-		params.put("amount", "1");
-		return restTemplate.getForObject(urlTemplate, ConversionApiResponse.class,params).getResult();
+		params.put("symbols", currencyExchange.getTargetCurrency()+","+currencyExchange.getSourceCurrency());
+		var response=restTemplate.getForObject(urlTemplate, LatestApiResponse.class,params);
+		var sourceval=response.getRates().get(currencyExchange.getSourceCurrency());
 
+		var targetVal=response.getRates().get(currencyExchange.getTargetCurrency());
+		currencyExchange.setRate(targetVal/sourceval);
+		return currencyExchange;
 	}
 }

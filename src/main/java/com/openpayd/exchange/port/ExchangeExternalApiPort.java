@@ -2,9 +2,10 @@
 
 package com.openpayd.exchange.port;
 
-import com.openpayd.exchange.model.ExchangeConversion;
+import com.openpayd.exchange.model.CurrencyExchange;
 
 public interface ExchangeExternalApiPort {
 
-	String getCurrencyPairRate(ExchangeConversion exchangeConversion);
+
+	CurrencyExchange currencyExchangeResult(CurrencyExchange currencyExchange);
 }

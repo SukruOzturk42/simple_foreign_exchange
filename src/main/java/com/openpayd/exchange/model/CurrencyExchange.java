@@ -3,13 +3,18 @@
 package com.openpayd.exchange.model;
 
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ExchangeConversion {
+public class CurrencyExchange {
 	private String sourceCurrency;
 	private String targetCurrency;
-	private double amount=1;
+	private double rate;
+	private double amount=1.0;
+	private double exchangeResult;
+	private String transactionId;
+	private LocalDateTime transactionDate;
 }

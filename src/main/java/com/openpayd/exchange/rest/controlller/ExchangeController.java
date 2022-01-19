@@ -2,10 +2,11 @@
 
 package com.openpayd.exchange.rest.controlller;
 
-import com.openpayd.exchange.model.ExchangeConversion;
+import com.openpayd.exchange.model.CurrencyExchange;
 import com.openpayd.exchange.port.ExchangeExternalApiPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class ExchangeController {
 
 	private final ExchangeExternalApiPort exchangeExternalApiPort;
-	@GetMapping("campaign-approval-history")
-	public String getRate(){
-        return exchangeExternalApiPort.getCurrencyPairRate(ExchangeConversion.builder()
-				.build());
+	@GetMapping("currency-pair-rate")
+	public CurrencyExchange getCurrenciesRate(@RequestParam String sourceCurrency,@RequestParam String targetCurrency) {
+		return exchangeExternalApiPort.currencyExchangeResult(
+				CurrencyExchange.builder()
+						.sourceCurrency(sourceCurrency)
+						.targetCurrency(targetCurrency)
+						.amount(1.0).build());
 	}
-
 }
