@@ -2,6 +2,8 @@
 
 package com.openpayd.exchange.infrastructure.api.adapter;
 
+import com.openpayd.exchange.common.model.ExchangeException;
+import com.openpayd.exchange.common.model.ExchangeExternalApiException;
 import com.openpayd.exchange.infrastructure.api.adapter.dto.LatestApiResponse;
 import com.openpayd.exchange.model.CurrencyExchange;
 import com.openpayd.exchange.port.ExchangeExternalApiPort;
@@ -14,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,9 +27,9 @@ public class ExchangeExternalApiPortAdapter implements ExchangeExternalApiPort {
 
 	private final String LATEST_API_URL ="/latest";
 
-	@Value("${api.exchangerate.host.url}")
+	@Value("${api.fixer.host.url}")
 	private String apiHost;
-	@Value("${api.exchangerate.access_key}")
+	@Value("${api.fixer.access_key}")
 	private String accessKey;
 
 
@@ -41,11 +44,25 @@ public class ExchangeExternalApiPortAdapter implements ExchangeExternalApiPort {
 		Map<String, String> params = new HashMap<>();
 		params.put("access_key", accessKey);
 		params.put("symbols", currencyExchange.getTargetCurrency()+","+currencyExchange.getSourceCurrency());
-		var response=restTemplate.getForObject(urlTemplate, LatestApiResponse.class,params);
-		var sourceval=response.getRates().get(currencyExchange.getSourceCurrency());
+		try{
+			var response=restTemplate.getForObject(urlTemplate, LatestApiResponse.class,params);
+			if(response.isSuccess()){
+				var sourceval=response.getRates().get(currencyExchange.getSourceCurrency());
 
-		var targetVal=response.getRates().get(currencyExchange.getTargetCurrency());
-		currencyExchange.setRate(targetVal/sourceval);
-		return currencyExchange;
+				var targetVal=response.getRates().get(currencyExchange.getTargetCurrency());
+				currencyExchange.setRate(targetVal/sourceval);
+				currencyExchange.setExchangeAmountResult(currencyExchange.getRate()*currencyExchange.getAmount());
+				currencyExchange.setTransactionDate(response.getDate());
+				currencyExchange.setTransactionId(UUID.randomUUID().toString());
+				return currencyExchange;
+			}else{
+				throw new ExchangeExternalApiException(response.getError().getCode(),response.getError().getInfo());
+			}
+
+
+		}catch (Exception e){
+             throw new ExchangeException("currency.conversion.not.handled");
+		}
+
 	}
 }

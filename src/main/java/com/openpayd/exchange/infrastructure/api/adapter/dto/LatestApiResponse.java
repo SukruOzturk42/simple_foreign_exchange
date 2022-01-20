@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Data
@@ -18,4 +19,17 @@ public class LatestApiResponse {
 	private boolean success;
 	private String result;
 	private Map<String,Double> rates;
+	private LocalDate date;
+	private Long timestamp;
+	private String base;
+	private Error error;
+
+	@Data
+	@Builder
+	@AllArgsConstructor
+	@NoArgsConstructor
+	public static class Error{
+		private String code;
+		private String info;
+	}
 }

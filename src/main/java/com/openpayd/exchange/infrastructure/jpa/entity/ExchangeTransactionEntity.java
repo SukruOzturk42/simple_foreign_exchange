@@ -7,7 +7,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -39,8 +38,8 @@ public class ExchangeTransactionEntity {
 	@Column(name = "amount")
 	private double amount=1.0;
 
-	@Column(name = "exchange_result")
-	private double exchangeResult;
+	@Column(name = "exchange_amount_result")
+	private double exchangeAmountResult;
 
 
 	public CurrencyExchange toModel(){
@@ -51,6 +50,7 @@ public class ExchangeTransactionEntity {
 				.sourceCurrency(sourceCurrency)
 				.amount(amount)
 				.rate(rate)
+				.exchangeAmountResult(exchangeAmountResult)
 				.build();
 	}
 
@@ -60,7 +60,9 @@ public class ExchangeTransactionEntity {
 		entity.setTransactionDate(currencyExchange.getTransactionDate());
 		entity.setRate(currencyExchange.getRate());
 		entity.setAmount(currencyExchange.getAmount());
-		entity.setExchangeResult(currencyExchange.getExchangeResult());
+		entity.setSourceCurrency(currencyExchange.getSourceCurrency());
+		entity.setTargetCurrency(currencyExchange.getTargetCurrency());
+		entity.setExchangeAmountResult(currencyExchange.getExchangeAmountResult());
 		return entity;
 	}
 }

@@ -15,7 +15,7 @@ public class CurrencyExchange {
 	private String targetCurrency;
 	private double rate;
 	private double amount=1.0;
-	private double exchangeResult;
+	private double exchangeAmountResult;
 	private String transactionId;
 	private LocalDate transactionDate;
 }

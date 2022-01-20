@@ -19,7 +19,7 @@ public class ExchangeTransactionRecordCreationAspect {
 	private final CurrencyExchangeTransactionPort currencyExchangeTransactionPort;
 
 	@AfterReturning(
-			value = "@annotation(CampaignEventCreator)",
+			value = "@annotation(ExchangeTransactionRecordCreator)",
 			returning = "currencyExchange")
 	public void createCampaignEvents(CurrencyExchange currencyExchange){
 

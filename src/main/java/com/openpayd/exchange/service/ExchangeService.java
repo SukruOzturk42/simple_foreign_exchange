@@ -21,10 +21,10 @@ public class ExchangeService {
 	private final CurrencyExchangeTransactionPort currencyExchangeTransactionPort;
 
 
-	public CurrencyExchange getCurrencyExchangeAmountAsOne(String baseCurrency,String targetCurrency){
+	public CurrencyExchange getCurrencyExchangeAmountAsOne(String sourceCurrency,String targetCurrency){
 
 		var currencyExchange=CurrencyExchange.builder()
-											 .sourceCurrency(baseCurrency)
+											 .sourceCurrency(sourceCurrency)
 											 .targetCurrency(targetCurrency)
 											 .amount(1.0)
 				                             .build();

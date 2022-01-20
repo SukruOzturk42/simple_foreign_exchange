@@ -2,6 +2,7 @@
 
 package com.openpayd.exchange.infrastructure.jpa.adapter;
 
+import com.google.common.math.IntMath;
 import com.openpayd.exchange.infrastructure.jpa.entity.ExchangeTransactionEntity;
 import com.openpayd.exchange.infrastructure.jpa.repository.ExchangeTransactionJPARepository;
 import com.openpayd.exchange.infrastructure.jpa.repository.ExchangeTransactionSpecification;
@@ -15,6 +16,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
@@ -51,10 +53,11 @@ public class CurrencyExchangeTransactionPortAdapter implements CurrencyExchangeT
 						.stream()
 						.map(ExchangeTransactionEntity::toModel)
 						.collect(Collectors.toList()):new ArrayList<>())
-				.page(pageable.getPageNumber())
-				.size(pageable.getPageSize())
+				.page(page!=null?page.getPageable().getPageNumber():0)
+				.size(page!=null?page.getPageable().getPageSize():0)
 				.totalItems(page!=null?page.getTotalElements():0)
-				.totalPages(page!=null?page.getTotalPages():0)
+				.totalPages(page!=null? IntMath.divide((int)page.getTotalElements(),page.getPageable().getPageSize(),
+						RoundingMode.FLOOR):0)
 				.build();
 	}
 }

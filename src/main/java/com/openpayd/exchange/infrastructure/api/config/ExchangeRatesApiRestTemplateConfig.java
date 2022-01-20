@@ -18,7 +18,7 @@ public class ExchangeRatesApiRestTemplateConfig {
 
 	private final CloseableHttpClient httpClient;
 
-	@Value("${api.exchangerate.host.url}")
+	@Value("${api.fixer.host.url}")
 	private String apiHost;
 
 	@Bean
