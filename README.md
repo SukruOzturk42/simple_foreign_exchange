@@ -33,5 +33,5 @@ You'll need Java 11 installed.
 # Api Documantation
 It uses swagger for api documantation.
 
-The entry point address of the swagger is at http://localhost:8080/api,
+The entry point address of the swagger is at http://localhost:8080/swagger-ui.html#/exchange-controller,
 
