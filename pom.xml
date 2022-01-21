@@ -11,7 +11,7 @@
 	<groupId>com.openpayd</groupId>
 	<artifactId>exchange</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>exchange</name>
+	<name>exchange-service</name>
 	<description>simple foreign exchange application</description>
 	<properties>
 		<java.version>11</java.version>
