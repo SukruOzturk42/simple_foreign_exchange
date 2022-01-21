@@ -30,8 +30,8 @@ public class CurrencyExchangeTransactionPortAdapter implements CurrencyExchangeT
 	private final ExchangeTransactionJPARepository jpaRepository;
 
 	@Override
-	public void save(CurrencyExchange currencyExchange) {
-	     jpaRepository.save(ExchangeTransactionEntity.fromModel(currencyExchange));
+	public CurrencyExchange save(CurrencyExchange currencyExchange) {
+	    return jpaRepository.save(ExchangeTransactionEntity.fromModel(currencyExchange)).toModel();
 	}
 
 	@Override

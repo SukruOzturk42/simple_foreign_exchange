@@ -25,6 +25,7 @@ public class ExchangeTransactionRecordCreationAspect {
 
 		try{
 			currencyExchangeTransactionPort.save(currencyExchange);
+			log.info("exchange transaction saved using aspect successfully ");
 
 		}catch (Exception e){
 			log.error(e.getMessage());

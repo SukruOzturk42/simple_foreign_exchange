@@ -51,7 +51,8 @@ public class ExchangeExternalApiPortAdapter implements ExchangeExternalApiPort {
 
 				var targetVal=response.getRates().get(currencyExchange.getTargetCurrency());
 				currencyExchange.setRate(targetVal/sourceval);
-				currencyExchange.setExchangeAmountResult(currencyExchange.getRate()*currencyExchange.getAmount());
+				currencyExchange.setExchangeAmountResult(
+						calculateConversionResult(currencyExchange.getRate(),currencyExchange.getAmount()));
 				currencyExchange.setTransactionDate(response.getDate());
 				currencyExchange.setTransactionId(UUID.randomUUID().toString());
 				return currencyExchange;
@@ -64,5 +65,9 @@ public class ExchangeExternalApiPortAdapter implements ExchangeExternalApiPort {
              throw new ExchangeException("currency.conversion.not.handled");
 		}
 
+	}
+
+	public double calculateConversionResult(double rate,double amount) {
+		return rate*amount;
 	}
 }

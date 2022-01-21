@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface CurrencyExchangeTransactionPort {
 
 
-	void save(CurrencyExchange currencyExchange);
+	CurrencyExchange save(CurrencyExchange currencyExchange);
 
 	PageContent<CurrencyExchange> getCurrencyExchangeTransactions(
 			CurrencyExchangeTransactionCriteria currencyExchangeTransactionCriteria,Pageable pageable);
