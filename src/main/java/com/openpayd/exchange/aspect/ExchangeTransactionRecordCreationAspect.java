@@ -29,7 +29,8 @@ public class ExchangeTransactionRecordCreationAspect {
 
 		}catch (Exception e){
 			log.error(e.getMessage());
-			log.info(String.format("Error occurred at campaign event creation phase, campaignId: %s",currencyExchange.getTransactionId()));
+			log.info(String.format("Error occurred at exchange event creation phase, transactionId: %s",
+					currencyExchange.getTransactionId()));
 		}
 
 	}
