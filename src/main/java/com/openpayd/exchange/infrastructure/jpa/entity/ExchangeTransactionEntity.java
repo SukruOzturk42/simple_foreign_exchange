@@ -48,6 +48,7 @@ public class ExchangeTransactionEntity {
 				.transactionId(transactionId)
 				.transactionDate(transactionDate)
 				.sourceCurrency(sourceCurrency)
+				.targetCurrency(targetCurrency)
 				.amount(amount)
 				.rate(rate)
 				.exchangeAmountResult(exchangeAmountResult)
