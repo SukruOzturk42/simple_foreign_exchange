@@ -34,6 +34,9 @@ public class CurrencyExchangeResponse {
 				.transactionId(currencyExchange.getTransactionId())
 				.amount(currencyExchange.getAmount())
 				.exchangeAmountResult(currencyExchange.getExchangeAmountResult())
+				.sourceCurrency(currencyExchange.getSourceCurrency())
+				.targetCurrency(currencyExchange.getTargetCurrency())
+				.transactionDate(currencyExchange.getTransactionDate())
 				.build();
 	}
 
