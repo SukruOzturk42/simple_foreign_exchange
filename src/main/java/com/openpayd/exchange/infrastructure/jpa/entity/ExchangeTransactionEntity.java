@@ -32,7 +32,7 @@ public class ExchangeTransactionEntity {
 	@Column(name = "target_currency")
 	private String targetCurrency;
 
-	@Column(name = "target")
+	@Column(name = "rate")
 	private double rate;
 
 	@Column(name = "amount")

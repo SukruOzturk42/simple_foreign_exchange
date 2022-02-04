@@ -33,6 +33,7 @@ public class CurrencyExchangeResponse {
 				.exchangeAmountResult(currencyExchange.getExchangeAmountResult())
 				.transactionId(currencyExchange.getTransactionId())
 				.amount(currencyExchange.getAmount())
+				.rate(currencyExchange.getRate())
 				.exchangeAmountResult(currencyExchange.getExchangeAmountResult())
 				.sourceCurrency(currencyExchange.getSourceCurrency())
 				.targetCurrency(currencyExchange.getTargetCurrency())
